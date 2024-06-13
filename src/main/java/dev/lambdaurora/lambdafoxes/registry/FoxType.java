@@ -20,13 +20,15 @@ package dev.lambdaurora.lambdafoxes.registry;
 import dev.lambdaurora.lambdafoxes.LambdaFoxes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.tag.TagFactory;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.FoxEntity;
-import net.minecraft.tag.Tag;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.biome.Biome;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -34,7 +36,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -89,7 +90,7 @@ public class FoxType {
     private final int weight;
     private final Optional<FoxType> inherited;
     private final boolean natural;
-    private final Tag.Identified<Biome> biomes;
+    private final TagKey<Biome> biomes;
     private final float scaleFactor;
     private final EntityType<? extends FoxEntity> limitedTo;
     private final boolean fireImmune;
@@ -121,7 +122,7 @@ public class FoxType {
             var biomeTagNamespace = id.getNamespace();
             if (biomeTagNamespace.equalsIgnoreCase("minecraft"))
                 biomeTagNamespace = LambdaFoxes.NAMESPACE;
-            this.biomes = TagFactory.BIOME.create(new Identifier(biomeTagNamespace, "fox_spawn/" + id.getPath()));
+            this.biomes = TagKey.of(RegistryKeys.BIOME, new Identifier(biomeTagNamespace, "fox_spawn/" + id.getPath()));
             this.modelId = modelId;
         }
 
@@ -249,8 +250,8 @@ public class FoxType {
      * @param biome the biome
      * @return the chosen fox type
      */
-    public static @NotNull FoxType rollFoxType(@NotNull Random random, @NotNull Biome biome) {
-        var types = TYPES.stream().filter(type -> type.inherited.isEmpty() && type.biomes.contains(biome)).collect(Collectors.toList());
+    public static @NotNull FoxType rollFoxType(@NotNull Random random, @NotNull RegistryEntry<Biome> biome) {
+        var types = TYPES.stream().filter(type -> type.inherited.isEmpty() && biome.isIn(type.biomes)).collect(Collectors.toList());
         if (types.size() == 0)
             return rollFoxType(random, RED, true);
 

@@ -37,14 +37,9 @@ public abstract class SpawnRestrictionMixin {
     @Final
     private static Map<EntityType<?>, ?> RESTRICTIONS;
 
-    @Shadow
-    private static <T extends MobEntity> void register(EntityType<T> type, SpawnRestriction.Location location, Heightmap.Type heightmapType, SpawnRestriction.SpawnPredicate<T> predicate) {
-        throw new IllegalStateException("Dummy method body invoked. A critical mixin failure has occurred.");
-    }
-
     @Inject(method = "<clinit>", at = @At("TAIL"))
     private static void onInit(CallbackInfo ci) {
         RESTRICTIONS.remove(EntityType.FOX);
-        register(EntityType.FOX, SpawnRestriction.Location.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, LambdaFoxEntity::canSpawn);
+        SpawnRestriction.register(EntityType.FOX, SpawnRestriction.Location.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, LambdaFoxEntity::canSpawn);
     }
 }

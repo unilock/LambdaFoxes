@@ -42,7 +42,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.LocalDifficulty;
@@ -78,16 +77,16 @@ public abstract class FoxEntityMixin extends AnimalEntity implements LambdaFoxEn
     public abstract boolean isSleeping();
 
     @Shadow
-    protected abstract void setSleeping(boolean sleeping);
+    abstract void setSleeping(boolean sleeping);
 
     @Shadow
-    protected abstract void stopActions();
+    abstract void stopActions();
 
     @Shadow
     public abstract void setTarget(LivingEntity target);
 
     @Shadow
-    protected abstract void setAggressive(boolean aggressive);
+    abstract void setAggressive(boolean aggressive);
 
     @Shadow
     public abstract boolean isSitting();
@@ -99,7 +98,7 @@ public abstract class FoxEntityMixin extends AnimalEntity implements LambdaFoxEn
     public abstract boolean isChasing();
 
     @Shadow
-    protected abstract boolean canTrust(UUID uuid);
+    abstract boolean canTrust(UUID uuid);
 
     private boolean waiting;
     private float appreciation;
@@ -144,7 +143,7 @@ public abstract class FoxEntityMixin extends AnimalEntity implements LambdaFoxEn
             method = "initialize",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/entity/passive/FoxEntity;setType(Lnet/minecraft/entity/passive/FoxEntity$Type;)V",
+                    target = "Lnet/minecraft/entity/passive/FoxEntity;setVariant(Lnet/minecraft/entity/passive/FoxEntity$Type;)V",
                     shift = At.Shift.AFTER
             )
     )
@@ -190,7 +189,7 @@ public abstract class FoxEntityMixin extends AnimalEntity implements LambdaFoxEn
 
     @Inject(method = "addTypeSpecificGoals", at = @At("HEAD"), cancellable = true)
     private void onAddTypeSpecificGoals(CallbackInfo ci) {
-        if (this.world.isClient()) {
+        if (this.getWorld().isClient()) {
             ci.cancel(); // Why this isn't done already?
             return;
         }
@@ -260,7 +259,7 @@ public abstract class FoxEntityMixin extends AnimalEntity implements LambdaFoxEn
 
         int petCooldown = this.dataTracker.get(LambdaFoxesRegistry.FOX_PET_COOLDOWN);
 
-        if (this.world.isClient && !this.isWild()) {
+        if (this.getWorld().isClient && !this.isWild()) {
             boolean hasItem = !(this.getFoxArmor().isEmpty() && this.getMainHandStack().isEmpty());
 
             // Pet the foxxo.
@@ -375,10 +374,10 @@ public abstract class FoxEntityMixin extends AnimalEntity implements LambdaFoxEn
 
     @Override
     public void onDeath(DamageSource source) {
-        if (!this.world.isClient && this.world.getGameRules().getBoolean(GameRules.SHOW_DEATH_MESSAGES)
+        if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.SHOW_DEATH_MESSAGES)
                 && this.getTrustLevel() >= this.getMaxTrustLevel() - 1) {
             this.getOwner().filter(owner -> owner instanceof ServerPlayerEntity)
-                    .ifPresent(owner -> owner.sendSystemMessage(this.getDamageTracker().getDeathMessage(), Util.NIL_UUID));
+                    .ifPresent(owner -> ((ServerPlayerEntity) owner).sendMessage(this.getDamageTracker().getDeathMessage(), false));
         }
 
         super.onDeath(source);
@@ -496,7 +495,7 @@ public abstract class FoxEntityMixin extends AnimalEntity implements LambdaFoxEn
             } else if (target instanceof PlayerEntity && owner instanceof PlayerEntity
                     && !((PlayerEntity) owner).shouldDamagePlayer((PlayerEntity) target)) {
                 return false;
-            } else if (target instanceof HorseBaseEntity && ((HorseBaseEntity) target).isTame()) {
+            } else if (target instanceof AbstractHorseEntity && ((AbstractHorseEntity) target).isTame()) {
                 return false;
             } else {
                 return !(target instanceof TameableEntity) || !((TameableEntity) target).isTamed();
@@ -512,7 +511,7 @@ public abstract class FoxEntityMixin extends AnimalEntity implements LambdaFoxEn
 
     @Override
     public @NotNull Optional<LivingEntity> getOwner() {
-        return this.getOwnerUuid().map(uuid -> this.world.getPlayerByUuid(uuid));
+        return this.getOwnerUuid().map(uuid -> this.getWorld().getPlayerByUuid(uuid));
     }
 
     @Override

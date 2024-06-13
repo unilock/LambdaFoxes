@@ -22,13 +22,15 @@ import dev.lambdaurora.lambdafoxes.item.DyeableFoxArmorItem;
 import dev.lambdaurora.lambdafoxes.item.FoxArmorItem;
 import dev.lambdaurora.lambdafoxes.item.FoxsicleItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.FoxEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.item.ItemGroups;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -49,14 +51,27 @@ public class LambdaFoxesRegistry {
     public static final FoxArmorItem DIAMOND_FOX_ARMOR = register("diamond_fox_armor", new FoxArmorItem("diamond", 11, false));
     public static final FoxArmorItem NETHERITE_FOX_ARMOR = register("netherite_fox_armor", new FoxArmorItem("netherite", 15, true));
 
-    public static final FoxsicleItem CATSICLE_ITEM = register("catsicle", new FoxsicleItem(new FabricItemSettings().group(ItemGroup.FOOD)));
-    public static final FoxsicleItem FOXSICLE_ITEM = register("foxsicle", new FoxsicleItem(new FabricItemSettings().group(ItemGroup.FOOD)));
+    public static final FoxsicleItem CATSICLE_ITEM = register("catsicle", new FoxsicleItem(new FabricItemSettings()));
+    public static final FoxsicleItem FOXSICLE_ITEM = register("foxsicle", new FoxsicleItem(new FabricItemSettings()));
 
     public static void init() {
         FoxType.fromNumericId(0); // Triggers initialization.
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(entries -> {
+            entries.add(LEATHER_FOX_ARMOR);
+            entries.add(IRON_FOX_ARMOR);
+            entries.add(GOLDEN_FOX_ARMOR);
+            entries.add(DIAMOND_FOX_ARMOR);
+            entries.add(NETHERITE_FOX_ARMOR);
+        });
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> {
+            entries.add(CATSICLE_ITEM);
+            entries.add(FOXSICLE_ITEM);
+        });
     }
 
     private static <T extends Item> T register(@NotNull String name, @NotNull T item) {
-        return Registry.register(Registry.ITEM, LambdaFoxes.id(name), item);
+        return Registry.register(Registries.ITEM, LambdaFoxes.id(name), item);
     }
 }

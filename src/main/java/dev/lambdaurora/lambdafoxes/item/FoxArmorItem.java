@@ -32,7 +32,7 @@ public class FoxArmorItem extends Item {
     public final Identifier entityTexture;
 
     public FoxArmorItem(@NotNull String name, int bonus, boolean fireproof) {
-        super(fireproof(new Item.Settings().maxCount(1).group(ItemGroup.MISC), fireproof));
+        super(fireproof(new Item.Settings().maxCount(1), fireproof));
         this.bonus = bonus;
         this.entityTexture = LambdaFoxes.id("textures/entity/fox/armor/" + name + "_fox_armor.png");
     }

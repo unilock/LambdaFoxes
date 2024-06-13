@@ -22,7 +22,7 @@ import dev.lambdaurora.lambdafoxes.mixin.client.EntityModelLayersAccessor;
 import dev.lambdaurora.lambdafoxes.registry.FoxType;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.minecraft.client.model.Dilation;
 import net.minecraft.client.model.TexturedModelData;
 import net.minecraft.client.render.entity.model.EntityModelLayer;

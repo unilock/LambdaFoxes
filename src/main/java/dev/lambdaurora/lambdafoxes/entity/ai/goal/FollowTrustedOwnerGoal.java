@@ -50,7 +50,7 @@ public class FollowTrustedOwnerGoal extends Goal {
 
     public FollowTrustedOwnerGoal(FoxEntity entity, double speed, float minDistance, float maxDistance, boolean leavesAllowed) {
         this.entity = entity;
-        this.world = entity.world;
+        this.world = entity.getWorld();
         this.speed = speed;
         this.navigation = entity.getNavigation();
         this.minDistance = minDistance;
@@ -110,7 +110,7 @@ public class FollowTrustedOwnerGoal extends Goal {
 
     @Override
     public void tick() {
-        this.entity.getLookControl().lookAt(this.owner, 10.0F, (float) this.entity.getLookPitchSpeed());
+        this.entity.getLookControl().lookAt(this.owner, 10.0F, (float) this.entity.getMaxLookPitchChange());
         if (--this.updateCountdownTicks <= 0) {
             this.updateCountdownTicks = 10;
             if (!this.entity.isLeashed() && !this.entity.hasVehicle()) {

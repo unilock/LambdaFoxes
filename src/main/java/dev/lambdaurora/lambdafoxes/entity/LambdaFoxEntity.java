@@ -26,10 +26,9 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.passive.FoxEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldAccess;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.ServerWorldAccess;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Random;
 
 /**
  * Represents the enhanced fox entity.
@@ -103,7 +102,7 @@ public interface LambdaFoxEntity extends TrustEntity, PettableEntity {
      */
     void setAppreciation(float appreciation);
 
-    static boolean canSpawn(EntityType<FoxEntity> fox, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
+    static boolean canSpawn(EntityType<FoxEntity> fox, ServerWorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
         var state = world.getBlockState(pos.down());
         return (state.isOf(Blocks.GRASS_BLOCK) || state.isOf(Blocks.SNOW) || state.isOf(Blocks.SAND))
                 && world.getBaseLightLevel(pos, 0) > 8;

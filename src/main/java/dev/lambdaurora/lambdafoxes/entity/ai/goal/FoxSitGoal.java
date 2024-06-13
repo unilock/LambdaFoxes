@@ -89,12 +89,12 @@ public class FoxSitGoal extends Goal {
     }
 
     protected boolean isAtFavoredLocation() {
-        var pos = new BlockPos(this.fox.getX(), this.fox.getBoundingBox().maxY, this.fox.getZ());
+        var pos = new BlockPos(this.fox.getBlockX(), (int) this.fox.getBoundingBox().maxY, this.fox.getBlockZ());
         return !this.fox.getEntityWorld().isSkyVisible(pos) && this.fox.getPathfindingFavor(pos) >= 0.0F;
     }
 
     protected boolean cannotCalmDown() {
-        return !this.fox.world.getTargets(LivingEntity.class, this.WORRIABLE_ENTITY_PREDICATE, this.fox,
+        return !this.fox.getWorld().getTargets(LivingEntity.class, this.WORRIABLE_ENTITY_PREDICATE, this.fox,
                 this.fox.getBoundingBox().expand(12.0D, 6.0D, 12.0D)).isEmpty();
     }
 }

@@ -21,7 +21,7 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.FoxHeldItemFeatureRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.passive.FoxEntity;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -33,7 +33,7 @@ public class FoxHeldItemFeatureRendererMixin {
     private void onRender(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, FoxEntity fox,
                           float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch,
                           CallbackInfo ci) {
-        matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(180.0f));
+        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180.0f));
         matrices.translate(0, -0.2, 0);
     }
 }

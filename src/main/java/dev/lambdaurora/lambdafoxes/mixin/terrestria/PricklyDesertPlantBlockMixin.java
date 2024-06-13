@@ -21,7 +21,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -38,6 +37,6 @@ public class PricklyDesertPlantBlockMixin extends Block {
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         // Foxes don't get hurt by berry bushes, why would fennec foxes get hurt by tiny cactus?
         if (entity.getType() != EntityType.FOX)
-            entity.damage(DamageSource.CACTUS, 1.0F);
+            entity.damage(entity.getDamageSources().cactus(), 1.0F);
     }
 }

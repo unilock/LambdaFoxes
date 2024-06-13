@@ -2,7 +2,7 @@
   "required": true,
   "package": "dev.lambdaurora.lambdafoxes.mixin",
   "plugin": "dev.lambdaurora.lambdafoxes.LambdaFoxesMixinPlugin",
-  "compatibilityLevel": "JAVA_16",
+  "compatibilityLevel": "JAVA_17",
   "mixins": [
     "EnchantmentMixin",
     "FoxEntityMixin",

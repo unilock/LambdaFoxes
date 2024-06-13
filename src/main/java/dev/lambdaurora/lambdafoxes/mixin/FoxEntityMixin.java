@@ -17,13 +17,13 @@
 
 package dev.lambdaurora.lambdafoxes.mixin;
 
-import dev.lambdaurora.lambdafoxes.registry.FoxType;
-import dev.lambdaurora.lambdafoxes.registry.LambdaFoxesRegistry;
 import dev.lambdaurora.lambdafoxes.entity.LambdaFoxEntity;
 import dev.lambdaurora.lambdafoxes.entity.ai.goal.FollowTrustedOwnerGoal;
 import dev.lambdaurora.lambdafoxes.entity.ai.goal.FoxAttackWithOwnerGoal;
 import dev.lambdaurora.lambdafoxes.entity.ai.goal.FoxSitGoal;
 import dev.lambdaurora.lambdafoxes.item.FoxArmorItem;
+import dev.lambdaurora.lambdafoxes.registry.FoxType;
+import dev.lambdaurora.lambdafoxes.registry.LambdaFoxesRegistry;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.EntityAttributes;

@@ -18,8 +18,8 @@
 package dev.lambdaurora.lambdafoxes.client;
 
 import dev.lambdaurora.lambdafoxes.LambdaFoxes;
-import dev.lambdaurora.lambdafoxes.registry.FoxType;
 import dev.lambdaurora.lambdafoxes.mixin.client.EntityModelLayersAccessor;
+import dev.lambdaurora.lambdafoxes.registry.FoxType;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityModelLayerRegistry;

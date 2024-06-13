@@ -17,9 +17,9 @@
 
 package dev.lambdaurora.lambdafoxes.client;
 
+import dev.lambdaurora.lambdafoxes.client.render.LambdaFoxEntityModel;
 import dev.lambdaurora.lambdafoxes.registry.FoxType;
 import dev.lambdaurora.lambdafoxes.registry.LambdaFoxesRegistry;
-import dev.lambdaurora.lambdafoxes.client.render.LambdaFoxEntityModel;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

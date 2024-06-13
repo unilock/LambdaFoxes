@@ -17,12 +17,12 @@
 
 package dev.lambdaurora.lambdafoxes.mixin.client;
 
+import dev.lambdaurora.lambdafoxes.client.FoxModels;
+import dev.lambdaurora.lambdafoxes.client.render.FoxArmorFeatureRenderer;
 import dev.lambdaurora.lambdafoxes.client.render.LambdaFoxEntityModel;
 import dev.lambdaurora.lambdafoxes.entity.LambdaFoxEntity;
 import dev.lambdaurora.lambdafoxes.registry.FoxType;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import dev.lambdaurora.lambdafoxes.client.FoxModels;
-import dev.lambdaurora.lambdafoxes.client.render.FoxArmorFeatureRenderer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.FoxEntityRenderer;
